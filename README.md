@@ -111,6 +111,14 @@ Open the Vite URL, usually:
 http://localhost:5173
 ```
 
+## Live Demo
+
+Public GitHub Pages demo:
+
+```text
+https://maxhan1120.github.io/b11202010-taiwan-tech-risk-dashboard/
+```
+
 ## Updating Data
 
 For a reliable demo without API credentials:

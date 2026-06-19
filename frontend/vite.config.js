@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === "true" ? "/b11202010-taiwan-tech-risk-dashboard/" : "/",
   plugins: [react()],
   server: {
     port: 5173,
