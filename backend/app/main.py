@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .database import get_connection, init_db, rows_to_dicts
@@ -13,6 +16,7 @@ from .ingestion.seed import seed_demo_data
 from .processing.risk import compute_all_risk_scores
 
 app = FastAPI(title="Taiwan Tech Stock Risk Dashboard API")
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,6 +39,11 @@ class PortfolioRequest(BaseModel):
 @app.on_event("startup")
 def startup() -> None:
     init_db()
+    with get_connection() as conn:
+        risk_count = conn.execute("SELECT COUNT(*) FROM risk_scores").fetchone()[0]
+    if risk_count == 0:
+        seed_demo_data()
+        compute_all_risk_scores()
 
 
 @app.get("/api/health")
@@ -218,3 +227,16 @@ def portfolio_level(score: float) -> str:
     if score >= 40:
         return "Medium"
     return "Low"
+
+
+if FRONTEND_DIST.exists():
+    assets_dir = FRONTEND_DIST / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_frontend(full_path: str) -> FileResponse:
+        target = FRONTEND_DIST / full_path
+        if target.is_file():
+            return FileResponse(target)
+        return FileResponse(FRONTEND_DIST / "index.html")

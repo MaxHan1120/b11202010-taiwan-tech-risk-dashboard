@@ -153,13 +153,23 @@ POST /api/update-data
 
 ## Deployment
 
-Recommended deployment:
+Recommended deployment for the submitted prototype:
 
-- Frontend: Vercel
-- Backend: Render
-- Database: SQLite for prototype; PostgreSQL if persistent cloud storage is required
+- Render Web Service using `render.yaml`
+- FastAPI serves both `/api/*` endpoints and the built React frontend
+- SQLite for prototype; PostgreSQL if persistent cloud storage is required
 
-Set `VITE_API_BASE_URL` in Vercel to the Render backend URL.
+Render build command:
+
+```text
+pip install -r backend/requirements.txt && cd frontend && npm install && npm run build
+```
+
+Render start command:
+
+```text
+uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+```
 
 ## Tests
 

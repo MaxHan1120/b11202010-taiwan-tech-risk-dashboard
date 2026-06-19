@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: taiwan-tech-risk-api
+    name: b11202010-taiwan-tech-risk-dashboard
     env: python
     plan: free
-    buildCommand: pip install -r backend/requirements.txt
+    buildCommand: pip install -r backend/requirements.txt && cd frontend && npm install && npm run build
     startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: FINMIND_TOKEN
