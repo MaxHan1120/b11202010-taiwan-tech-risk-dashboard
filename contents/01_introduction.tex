@@ -1,0 +1,8 @@
+\section{Introduction}
+\label{sec:introduction}
+
+This project proposes \textbf{Taiwan Semiconductor and Tech Stock Risk Dashboard}, a data product for retail investors who track Taiwan technology stocks but do not have time to monitor price movement, valuation, revenue, and financial statement signals every day. The product turns public market and fundamental data into an explainable risk score and a web dashboard. Its purpose is not to predict prices or recommend trades; it is a monitoring and research-efficiency tool that helps users decide which holdings deserve attention.
+
+The first version focuses on 20 semiconductor and technology stocks, including TSMC, MediaTek, UMC, ASE Technology, Novatek, Realtek, Quanta, Delta Electronics, Hon Hai, and related hardware names. This universe is intentionally narrow: these stocks are familiar to Taiwan retail investors, have relatively available data, and are exposed to fast-moving market cycles where risk monitoring is valuable.
+
+The implemented prototype contains a Python ingestion layer, a SQLite database, a rule-based risk scoring pipeline, a FastAPI backend, and a React/Vite frontend. The dashboard supports stock risk ranking, single-stock detail pages, factor-level risk comparison, and a portfolio watchlist view. Data can be pulled from FinMind when an API token is available, and the repository also includes deterministic demo data so the system can be reproduced for grading even without live API access.

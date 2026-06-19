@@ -1,0 +1,32 @@
+\section{Scalability and Cost}
+\label{sec:scalability-cost}
+
+At the initial scale, SQLite is sufficient. With 20 stocks, daily price history, valuation rows, monthly revenue, and quarterly financial statements, the data volume is small. The main cost is developer time, not infrastructure.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.18\textwidth} p{0.35\textwidth} p{0.35\textwidth}}
+\toprule
+\textbf{Scale} & \textbf{Expected Behavior} & \textbf{Likely Change Needed} \\
+\midrule
+Initial & 20 stocks, local SQLite, manual or scripted update & Current architecture is sufficient. \\
+10x & 200 stocks, daily batch, more frontend filtering & Add background scheduler, indexes, and better API pagination. \\
+100x & 2,000+ symbols or multiple markets & Move to PostgreSQL or warehouse storage; add job queue and observability. \\
+\bottomrule
+\end{tabular}
+\caption{Scalability plan.}
+\label{tab:scale}
+\end{table}
+
+The first bottleneck is not computation. Risk scoring is simple pandas batch processing. The first real bottlenecks are data-provider limits, deployment persistence, and operational reliability. If the backend runs on Render with SQLite, persistent storage may be fragile. A production deployment should use PostgreSQL or another managed database.
+
+The rough monthly infrastructure cost for a prototype can be close to zero using free tiers. A more reliable deployment might cost:
+
+\begin{itemize}
+    \item US\$5--15 for backend hosting.
+    \item US\$0--20 for database hosting at small scale.
+    \item US\$0 for frontend hosting on a free Vercel tier.
+    \item Additional cost for paid data access if public sources are insufficient.
+\end{itemize}
+
+The product becomes economically attractive only if the subscription revenue exceeds data and support costs. For example, 100 Pro users at NT\$299 per month would generate about NT\$29,900 per month before payment fees and operating costs. This is enough for a small side-project product, but not enough for a venture-scale company.

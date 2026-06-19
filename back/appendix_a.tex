@@ -1,0 +1,20 @@
+\section{Prototype Commands}
+\label{app:commands}
+
+The prototype can be reproduced with the following local commands:
+
+\begin{verbatim}
+python scripts\seed_demo_data.py
+python scripts\compute_risk_scores.py
+uvicorn backend.app.main:app --reload
+
+cd frontend
+npm install
+npm run dev
+\end{verbatim}
+
+The backend tests can be run with:
+
+\begin{verbatim}
+python -m pytest tests
+\end{verbatim}

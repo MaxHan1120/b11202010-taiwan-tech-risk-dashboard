@@ -1,0 +1,27 @@
+﻿*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.xdv
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+data/*.sqlite3
+data/*.db
+.env
+frontend/.env.local
+tmp/
+BDA_Final_Project-1 (1).pdf
+main.pdf

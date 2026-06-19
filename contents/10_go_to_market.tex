@@ -1,0 +1,12 @@
+\section{Go-to-Market Difficulties}
+\label{sec:go-to-market}
+
+The main go-to-market difficulty is trust. Investors are skeptical of black-box tools, especially in financial contexts. The product should therefore avoid language such as ``prediction,'' ``alpha,'' or ``buy signal.'' It should show each score's component breakdown and cite the latest data update time. Trust is earned through transparency, not through exaggerated claims.
+
+The second difficulty is data licensing and reliability. FinMind is a useful development source, but a commercial version would need to review provider terms, data redistribution rights, uptime, rate limits, and whether official TWSE or MOPS data should be integrated directly. If news or social sentiment is added later, terms-of-service and copyright risk become much more important.
+
+The third difficulty is competition. Broad platforms such as TradingView already provide charting and alerts \citep{tradingview_pricing}. Local Taiwan finance tools already provide financial statement lookup and stock screening. The proposed product must avoid competing on breadth. Its moat would come from a focused workflow: explainable risk monitoring for Taiwan technology-stock watchlists.
+
+The fourth difficulty is regulation and liability. Even though the prototype is not investment advice, users may interpret risk rankings as trading recommendations. The product must include disclaimers, avoid personalized trade advice, and frame outputs as research prioritization.
+
+Finally, unit economics depend on scale. A small prototype using SQLite and public APIs is cheap. A commercial product would incur costs for reliable data access, hosting, monitoring, alert delivery, customer support, and possibly legal review. The first profitable niche is likely a small paid community or creator plan rather than mass-market consumer acquisition.

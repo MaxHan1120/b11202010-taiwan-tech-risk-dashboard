@@ -1,0 +1,26 @@
+\section{Data Sources}
+\label{sec:data-sources}
+
+The prototype is designed around public Taiwan equity data, with FinMind as the primary ingestion interface. FinMind provides Taiwan market datasets such as stock price, valuation, monthly revenue, and financial statements through documented APIs \citep{finmind_technical,finmind_fundamental}. The code also includes deterministic demo data so the project can be reproduced without an API token.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.18\textwidth} p{0.24\textwidth} p{0.28\textwidth} p{0.18\textwidth}}
+\toprule
+\textbf{Source} & \textbf{Dataset} & \textbf{Use} & \textbf{Refresh} \\
+\midrule
+FinMind & \texttt{TaiwanStockPrice} & OHLC, volume, trading value & Trading day \\
+FinMind & \texttt{TaiwanStockPER} & PER, PBR, dividend yield & Trading day or available \\
+FinMind & \begin{tabular}{@{}l@{}}\texttt{TaiwanStock}\\\texttt{MonthRevenue}\end{tabular} & Monthly revenue, MoM, YoY & Monthly \\
+FinMind & \begin{tabular}{@{}l@{}}\texttt{TaiwanStock}\\\texttt{FinancialStatements}\end{tabular} & EPS, profit, income metrics & Quarterly \\
+Local generator & Deterministic demo seed & Reproducible demo and tests & On demand \\
+\bottomrule
+\end{tabular}
+\caption{Data sources used by the prototype.}
+\label{tab:data-sources}
+\end{table}
+
+The source strategy deliberately separates data frequency from system refresh frequency. Market data can update every trading day after market close. Monthly revenue and financial statements do not change daily, but the pipeline can still check for new values daily and reuse the latest available values in the risk score.
+
+The main data ethics issue is that the product should not overstate data quality or legal certainty. Public market data must be used according to the data provider's terms. The first prototype avoids scraping social media or news sites because those sources introduce copyright, terms-of-service, and privacy risks.

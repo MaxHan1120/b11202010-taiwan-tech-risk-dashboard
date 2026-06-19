@@ -1,0 +1,21 @@
+\section{Product Delivery}
+\label{sec:product-delivery}
+
+The customer consumes the product through a web dashboard. The prototype frontend is implemented with React and Vite, while the backend is implemented with FastAPI. The dashboard has four main views:
+
+\begin{enumerate}
+    \item \textbf{Overview}: ranks the 20 tracked stocks by latest total risk score, shows the number of high-risk and medium-risk stocks, and displays a bar chart of the highest-risk names.
+    \item \textbf{Stock Detail}: shows price, volume, risk score trend, risk factor breakdown, latest valuation metrics, monthly revenue, and financial statement metrics for one stock.
+    \item \textbf{Risk Factors}: ranks stocks separately by volatility, drawdown, abnormal volume, valuation, and fundamental risk.
+    \item \textbf{Portfolio Watchlist}: lets the user enter holdings and weights, then computes a portfolio-level risk score and industry exposure.
+\end{enumerate}
+
+The key workflow is:
+
+\begin{quote}
+    Open the overview page, identify stocks with elevated risk, click into a stock detail page, inspect which factor drove the score, and decide whether deeper research is needed.
+\end{quote}
+
+The API supports this workflow through endpoints such as \texttt{/api/risk/latest}, \texttt{/api/stocks/\{stock\_id\}/summary}, \texttt{/api/risk/history/\{stock\_id\}}, and \texttt{/api/portfolio/analyze}. The user-facing output is not a trading signal. It is a ranked risk explanation.
+
+For demonstration, the repository includes a ``Seed Demo Data'' flow so graders can run the dashboard without a FinMind token. With a token, the same pipeline can update from live FinMind data.

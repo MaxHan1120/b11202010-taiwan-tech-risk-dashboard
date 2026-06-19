@@ -1,0 +1,44 @@
+\section{System Architecture}
+\label{sec:system-architecture}
+
+The system is a batch-updated data product. It does not compute expensive analytics during each user request. Instead, ingestion and scoring happen in scheduled jobs, and the API serves precomputed results to the dashboard.
+
+\begin{figure}[H]
+    \centering
+    \fbox{
+    \begin{minipage}{0.92\textwidth}
+    \centering
+    \begin{tabular}{c}
+    \textbf{FinMind / Public Taiwan Stock Data} \\
+    $\downarrow$ \\
+    \textbf{Python Ingestion Scripts} \\
+    fetch price, valuation, revenue, and financial statement data \\
+    $\downarrow$ \\
+    \textbf{SQLite Storage Layer} \\
+    raw and cleaned tables keyed by \texttt{stock\_id} and date \\
+    $\downarrow$ \\
+    \textbf{Risk Scoring Pipeline} \\
+    volatility, drawdown, volume, valuation, and fundamental scores \\
+    $\downarrow$ \\
+    \textbf{FastAPI Backend} \\
+    latest ranking, stock detail, fundamentals, portfolio analysis \\
+    $\downarrow$ \\
+    \textbf{React/Vite Dashboard} \\
+    overview, stock detail, risk factors, portfolio watchlist
+    \end{tabular}
+    \end{minipage}
+    }
+    \caption{End-to-end data monetization system architecture.}
+    \label{fig:architecture}
+\end{figure}
+
+The architecture has four main layers:
+
+\begin{enumerate}
+    \item \textbf{Ingestion}: Python scripts call FinMind datasets and upsert rows into SQLite. If live data is unavailable, the demo seed generator creates deterministic sample data for reproducibility.
+    \item \textbf{Storage}: SQLite stores the tracked stock universe, market data, valuation metrics, monthly revenue, financial statement metrics, risk scores, and update logs.
+    \item \textbf{Processing}: the risk pipeline computes component scores and a total score for each tracked stock after data updates.
+    \item \textbf{Delivery}: FastAPI exposes JSON endpoints. React/Vite renders the user-facing dashboard.
+\end{enumerate}
+
+This design keeps the prototype simple while preserving the shape of a real data product: a scheduled batch pipeline, persistent storage, precomputed analytical features, and a low-latency serving layer.

@@ -1,0 +1,41 @@
+\section{Storage and Processing Design}
+\label{sec:storage-processing}
+
+\subsection{Storage}
+
+The prototype uses SQLite because the first version tracks only 20 stocks and needs to be easy to reproduce in a course environment. The schema contains seven primary tables:
+
+\begin{itemize}
+    \item \texttt{stocks}: fixed stock universe, stock names, industry labels, and categories.
+    \item \texttt{daily\_prices}: OHLC, volume, and trading value by stock and date.
+    \item \texttt{valuation\_metrics}: PER, PBR, and dividend yield.
+    \item \texttt{monthly\_revenue}: revenue, month-over-month growth, and year-over-year growth.
+    \item \texttt{financial\_metrics}: EPS, gross profit, operating income, and net income.
+    \item \texttt{risk\_scores}: total and component risk scores.
+    \item \texttt{update\_log}: update attempts and fallback status.
+\end{itemize}
+
+The main join key is \texttt{stock\_id}. Date is part of the primary key for time-series tables. This schema is intentionally normalized enough to support traceability, but not so complex that local setup becomes fragile.
+
+\subsection{Risk Processing}
+
+The dashboard uses an explainable rule-based score:
+
+\[
+\text{Total Risk Score} =
+0.25V + 0.25D + 0.20Q + 0.15P + 0.15F
+\]
+
+where:
+
+\begin{itemize}
+    \item $V$ is volatility risk: the percentile rank of latest 20-day annualized volatility.
+    \item $D$ is drawdown risk: the current drawdown from the 60-day high, scaled so a 35\% drawdown maps to 100.
+    \item $Q$ is abnormal-volume risk: latest volume relative to the 20-day average.
+    \item $P$ is valuation risk: average percentile rank of PER and PBR versus available history.
+    \item $F$ is fundamental risk: deterioration in monthly revenue YoY and recent EPS, gross profit, or net income.
+\end{itemize}
+
+Each component is clipped to a 0--100 range. The total score maps to three levels: Low for 0--39, Medium for 40--69, and High for 70--100. Missing data does not crash the pipeline; unavailable components fall back to a neutral score of 35. This is important because low-frequency fundamental data may be missing even when daily market data is available.
+
+The design favors interpretability over model sophistication. A machine learning model might appear more advanced, but it would be harder to validate, easier to overfit, and more likely to be mistaken for investment advice.

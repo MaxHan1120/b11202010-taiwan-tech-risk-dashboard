@@ -1,0 +1,87 @@
+﻿% ---------------------------------------------------------------------
+% Reusable report style for XeLaTeX
+% ---------------------------------------------------------------------
+\ProvidesPackage{Report}[2026/06/12 reusable report template]
+
+\input{D:/Latex/common/maxhan-fonts.sty}
+
+\RequirePackage{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{titling}
+\RequirePackage{lmodern}
+\RequirePackage{xcolor}
+\RequirePackage[table]{xcolor}
+\RequirePackage{amsmath,amsthm,amssymb}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage[title,titletoc]{appendix}
+\RequirePackage[sort&compress,square,comma,numbers]{natbib}
+\RequirePackage{enumitem}
+\RequirePackage{float}
+\RequirePackage{subcaption}
+\RequirePackage{listings}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
+
+\geometry{
+    left=20mm,
+    right=20mm,
+    top=30mm,
+    bottom=20mm
+}
+
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
+
+\graphicspath{{figures/}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    anchorcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\newcommand{\mytitle}{Untitled}
+\newcommand{\mygroup}{Group 0}
+\newcommand{\myauthors}{No authors defined}
+\newcommand{\documentdate}{\today}
+\newcommand{\headerleft}{Template}
+\newcommand{\headerright}{Report}
+
+\renewcommand{\title}[1]{\renewcommand{\mytitle}{#1}}
+\newcommand{\setgroup}[1]{\renewcommand{\mygroup}{#1}}
+\newcommand{\setauthors}[1]{\renewcommand{\myauthors}{#1}}
+\newcommand{\setdate}[1]{\renewcommand{\documentdate}{#1}}
+\newcommand{\setheaderleft}[1]{\renewcommand{\headerleft}{#1}}
+\newcommand{\setheaderright}[1]{\renewcommand{\headerright}{#1}}
+
+\renewcommand{\maketitle}{
+    \begingroup
+    \setlength{\parskip}{0pt}
+    \begin{center}
+        {\LARGE\bfseries \mytitle \par}
+        \vspace{1em}
+        {\large\bfseries \mygroup \par}
+        \vspace{0.5em}
+        \begin{tabular}{@{}l@{}}
+            \myauthors
+        \end{tabular}
+        \vspace{1em}
+        \hrule
+    \end{center}
+    \endgroup
+}
+
+\fancypagestyle{mystyle}{
+    \fancyhf{}
+    \fancyhead[L]{\headerleft}
+    \fancyhead[R]{\headerright}
+    \fancyfoot[L]{\documentdate}
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[R]{}
+}
+\pagestyle{mystyle}

@@ -1,0 +1,38 @@
+\section{Evidence of Demand and Willingness to Pay}
+\label{sec:demand-evidence}
+
+The demand claim is that retail investors will pay for tools that reduce the time cost of monitoring risky positions. I use three evidence paths: competitor pricing, public investor behavior research, and a reproducible local validation process that can be extended with surveys or forum scraping.
+
+\subsection{Competitor and Analogous Product Benchmarks}
+
+The strongest willingness-to-pay evidence is that individual investors already pay for financial data and charting products. TradingView, a global charting and market-data platform, publicly lists paid plans in addition to a free tier \citep{tradingview_pricing}. This shows that non-institutional investors are accustomed to subscription pricing for better monitoring, charting, and alerts. In Taiwan, products such as CMoney, Goodinfo, and other local stock tools occupy adjacent categories: screeners, financial data lookup, watchlists, and investor education. The proposed product is narrower than these platforms but more focused on one job: daily risk monitoring for Taiwan technology stocks.
+
+Based on these benchmarks, the first commercial hypothesis is a freemium model:
+
+\begin{itemize}
+    \item \textbf{Free}: track up to 5 stocks with basic risk score and daily ranking.
+    \item \textbf{Pro}: NT\$199--399 per month for 20+ tracked stocks, portfolio watchlist, factor breakdown, and alert history.
+    \item \textbf{Creator/community}: NT\$1,000--3,000 per month for a shareable watchlist dashboard used by investment communities or finance content creators.
+\end{itemize}
+
+This price range is intentionally below professional platforms. The product competes on focus and ease of interpretation, not on breadth of market data.
+
+\subsection{Behavioral Evidence}
+
+Retail investors actively use social and digital sources for investment decisions. Prior research on retail investor discussion platforms shows that investor conversations can contain useful signals and that retail investors seek digestible decision support from public information streams \citep{stockbabble}. This supports the broader demand assumption: the target customer does not only want raw data; they want processed, interpretable signals.
+
+For this project, the validation process is designed to be reproducible:
+
+\begin{enumerate}
+    \item Identify the target segment: Taiwan retail investors following semiconductor or technology stocks.
+    \item Benchmark competing information products and their pricing.
+    \item Collect user pain points through a short questionnaire or investment-community posts.
+    \item Map repeated pain points to product features: risk ranking, factor breakdown, and portfolio concentration.
+    \item Estimate willingness to pay by comparing time saved and existing subscription prices.
+\end{enumerate}
+
+\subsection{Estimated Time Savings}
+
+A manual workflow for 10 holdings can easily require 20--40 minutes per day: checking price movement, reading headlines, checking volume spikes, and reviewing whether financial indicators changed. If the dashboard reduces this to a 5-minute risk scan, it saves roughly 15--35 minutes per active market day. For a user who values after-work research time at NT\$200 per hour, this implies NT\$1,000 or more in monthly time value during active monitoring periods. A subscription at NT\$199--399 per month is therefore plausible if the product is trusted and reliable.
+
+The evidence is not yet enough to prove product-market fit. It is enough for a defensible course-project claim: the problem is real, analogous products are monetized, and the prototype targets a repeated workflow with measurable time savings.
